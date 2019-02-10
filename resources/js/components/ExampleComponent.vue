@@ -8,6 +8,10 @@
                     <div class="card-body">
                         I'm an example component.
                     </div>
+
+                    <ul v-if="messages.length > 0">
+                        <li v-for="message in messages">{{ message }}</li>
+                    </ul>
                 </div>
             </div>
         </div>
@@ -16,8 +20,20 @@
 
 <script>
     export default {
+
+        data() {
+            return {
+                messages: []
+            }
+        },
+
         mounted() {
-            console.log('Component mounted.')
+
+            window.Echo.channel('chat').listen('OnMessageSent',(e) => {
+                console.log(e);
+                this.messages.push(e.message);
+            });
+
         }
     }
 </script>

@@ -14,3 +14,9 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/send-message', function () {
+
+    event(new \App\Events\OnMessageSent('Hello From Laravel Sockets'));
+
+});
